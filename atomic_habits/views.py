@@ -24,7 +24,7 @@ class HabitsListView(generics.ListAPIView):
     queryset = Habits.objects.all()
     serializer_class = AtomicHabitsSerializers
     pagination_class = HabitsPagination
-    # permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated, IsOwner]
 
     def get_queryset(self):
         """

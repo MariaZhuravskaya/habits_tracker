@@ -9,7 +9,6 @@ class UserSerializers(serializers.ModelSerializer):
     """
     Сериализатор для представления пользователя
     """
-
     habits = serializers.SerializerMethodField()
 
     def get_habits(self, obj_user):

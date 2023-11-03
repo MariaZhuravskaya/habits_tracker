@@ -8,7 +8,6 @@ class AtomicHabitsSerializers(serializers.ModelSerializer):
     """
     Сериализатор для представления привычки
     """
-
     class Meta:
         model = Habits
         fields = '__all__'

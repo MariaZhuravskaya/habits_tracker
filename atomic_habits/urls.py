@@ -12,5 +12,4 @@ urlpatterns = [
     path('<int:pk>', HabitsRetrieveView.as_view(), name='retrieve'),
     path('update/<int:pk>', HabitsUpdateView.as_view(), name='update'),
     path('delete/<int:pk>', HabitsDestroyView.as_view(), name='delete'),
-
 ]

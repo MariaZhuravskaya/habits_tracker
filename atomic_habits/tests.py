@@ -1,7 +1,3 @@
-# import os
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-# from django.core.wsgi import get_wsgi_application
-# application = get_wsgi_application()
 
 from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
@@ -18,7 +14,6 @@ class HabitsTestCase(APITestCase):
         self.user = User.objects.create(email='adminka@gmail.com', password='1q2w3e4r')
         self.client.force_authenticate(user=self.user)  # Аутентифицируем клиента с созданным пользователем
         self.user.save()
-
         self.habit = Habits.objects.create(
             place="бассейн",
             time="00:09:00",
@@ -35,7 +30,6 @@ class HabitsTestCase(APITestCase):
         """
         тестирование создания привычки
         """
-
         data = {
             'place': self.habit.place,
             'time': self.habit.time,
@@ -46,25 +40,19 @@ class HabitsTestCase(APITestCase):
             'is_pablish': True,
             'user': self.user.id,
         }
-
         response = self.client.post(
             '/atomic_habits/create/',
             data=data
         )
-        print(response.json())
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
     def test_list_habit(self):
         """
         тестирование вывода списка привычек
         """
-
         response = self.client.get(
             reverse('atomic_habits:list'),
         )
-
-        print(response.json())
-
         self.assertEqual(
             response.status_code,
             status.HTTP_200_OK
@@ -80,11 +68,9 @@ class HabitsTestCase(APITestCase):
         """
         тестирование вывода 1 привычки
         """
-
         response = self.client.get(
             '/atomic_habits/' + str(self.habit.id)
         )
-
         self.assertEqual(
             response.status_code,
             status.HTTP_200_OK
@@ -104,12 +90,10 @@ class HabitsTestCase(APITestCase):
             'is_pablish': True,
             'user': self.user.id,
         }
-
         response = self.client.patch(
             '/atomic_habits/update/' + str(self.habit.id),
             data=data
         )
-
         self.assertEqual(
             response.status_code,
             status.HTTP_200_OK
@@ -119,11 +103,9 @@ class HabitsTestCase(APITestCase):
         """
         тестирование удаления привычки
         """
-
         response = self.client.delete(
             '/atomic_habits/delete/' + str(self.habit.id)
         )
-
         self.assertEqual(
             response.status_code,
             status.HTTP_204_NO_CONTENT
