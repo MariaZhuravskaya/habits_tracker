@@ -1,41 +1,71 @@
 #   Курсовой проект по DRF
 
-Сервис Полезных привычек
+# Сервис Полезных привычек
+
+```bash
 python3 -m venv venv
-Активировать виртуальное окружение
+```
+1. Активировать виртуальное окружение
+```bash
 source venv/bin/activate
-Установить зависимости проекта, указанные в файле requirements.txt
+```
+2. Установить зависимости проекта, указанные в файле `requirements.txt`
+```bash
 pip install -r requirements.txt
-Установка Redis
+```
+3. Установка Redis
+```bash
 sudo apt-get install redis-server
-Запустить Redis
+```
+4. Запустить Redis
+```bash
 sudo service redis-server start
-Это запустит Redis сервер и он будет слушать на стандартном порту 6379. 5. Убедиться, что Redis работает правильно, выполнив команду
-
+```
+Это запустит Redis сервер и он будет слушать на стандартном порту 6379.
+5. Убедиться, что Redis работает правильно, выполнив команду
+```bash
 redis-cli ping
-Установить PostreSQL
+```
+6. Установить PostreSQL
+```bash
 sudo apt-get install postgresql
-Выполнить вход
+```
+7. Выполнить вход
+```bash
 sudo -u postgres psql
-Cоздать базу данных с помощью следующей команды:
-CREATE DATABASE habit_tracker;
-Выйти
+```
+8. Cоздать базу данных 
+с помощью следующей команды:
+```bash
+CREATE DATABASE atomic_habits;
+```
+9. Выйти
+```bash
 \q
-Создать файл .env
+```
+10. Создать файл `.env` 
+11. Записать в файл настройки, как в .env.sample
 
-Записать в файл настройки, как в .env.sample
+12. Применить миграции
 
-Применить миграции
-
-python manage.py migrate users
+```bash
 python manage.py migrate
-Загрузить данные с помощью фикстур
-python manage.py loaddata data2.json
-Запустить сервер
+```
+13. Загрузить данные с помощью фикстур
+```bash
+python manage.py loaddata data.json
+```
+14. Запустить сервер
+```bash
 python manage.py runserver
-Запустить Celery
-celery -A habit_tracker worker -l INFO
-celery -A habit_tracker beat -l info
+```
+15. Запустить Celery
+```bash
+celery -A config worker -l INFO -P eventlet
+```
+```bash
+celery -A config beat -l info -S django
+```
 
 
 Контекст
