@@ -14,7 +14,7 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-4. Установка Redis. Запустить Redis.
+4. Установить Redis. Запустить Redis.
 ```bash
 https://learn.microsoft.com/en-us/windows/wsl/install
 ```
@@ -42,7 +42,7 @@ CREATE DATABASE atomic_habits;
 \q
 ```
 10. Создать файл `.env` 
-11. Записать в файл настройки, как в .env.sample
+11. Записать в файл настройки, как в .env_sample
 
 12. Применить создать и применить миграции
 
