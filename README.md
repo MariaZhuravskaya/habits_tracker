@@ -1,4 +1,43 @@
-#   Курсовая 7. DRF
+#   Курсовой проект по DRF
+
+Сервис Полезных привычек
+python3 -m venv venv
+Активировать виртуальное окружение
+source venv/bin/activate
+Установить зависимости проекта, указанные в файле requirements.txt
+pip install -r requirements.txt
+Установка Redis
+sudo apt-get install redis-server
+Запустить Redis
+sudo service redis-server start
+Это запустит Redis сервер и он будет слушать на стандартном порту 6379. 5. Убедиться, что Redis работает правильно, выполнив команду
+
+redis-cli ping
+Установить PostreSQL
+sudo apt-get install postgresql
+Выполнить вход
+sudo -u postgres psql
+Cоздать базу данных с помощью следующей команды:
+CREATE DATABASE habit_tracker;
+Выйти
+\q
+Создать файл .env
+
+Записать в файл настройки, как в .env.sample
+
+Применить миграции
+
+python manage.py migrate users
+python manage.py migrate
+Загрузить данные с помощью фикстур
+python manage.py loaddata data2.json
+Запустить сервер
+python manage.py runserver
+Запустить Celery
+celery -A habit_tracker worker -l INFO
+celery -A habit_tracker beat -l info
+
+
 Контекст
 
 В 2018 году Джеймс Клир написал книгу «Атомные привычки», которая посвящена приобретению новых полезных привычек и 
