@@ -44,7 +44,7 @@ CREATE DATABASE atomic_habits;
 10. Создать файл `.env` 
 11. Записать в файл настройки, как в .env_sample
 
-12. Применить создать и применить миграции
+12. Создать и применить миграции
 
 ```bash
 python manage.py makemigrations
