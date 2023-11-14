@@ -1,38 +1,36 @@
 #   Курсовой проект по DRF
 
-# Сервис Полезных привычек
+# Сервис полезных привычек
 
+1. Установить виртуальное окружение
 ```bash
 python3 -m venv venv
 ```
-1. Активировать виртуальное окружение
+2. Активировать виртуальное окружение
 ```bash
 source venv/bin/activate
 ```
-2. Установить зависимости проекта, указанные в файле `requirements.txt`
+3. Установить зависимости проекта, указанные в файле `requirements.txt`
 ```bash
 pip install -r requirements.txt
 ```
-3. Установка Redis
+4. Установка Redis. Запустить Redis.
 ```bash
-sudo apt-get install redis-server
+https://learn.microsoft.com/en-us/windows/wsl/install
 ```
-4. Запустить Redis
-```bash
-sudo service redis-server start
-```
-Это запустит Redis сервер и он будет слушать на стандартном порту 6379.
+Redis сервер будет слушать на стандартном порту 6379.
+
 5. Убедиться, что Redis работает правильно, выполнив команду
 ```bash
 redis-cli ping
 ```
 6. Установить PostreSQL
 ```bash
-sudo apt-get install postgresql
+pip install postgresql
 ```
 7. Выполнить вход
 ```bash
-sudo -u postgres psql
+psql -U postgres
 ```
 8. Cоздать базу данных 
 с помощью следующей команды:
@@ -46,8 +44,11 @@ CREATE DATABASE atomic_habits;
 10. Создать файл `.env` 
 11. Записать в файл настройки, как в .env.sample
 
-12. Применить миграции
+12. Применить создать и применить миграции
 
+```bash
+python manage.py makemigrations
+```
 ```bash
 python manage.py migrate
 ```
