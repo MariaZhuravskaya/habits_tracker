@@ -51,4 +51,3 @@ class UserDestroyView(generics.DestroyAPIView):
     serializer_class = UserSerializers
     permission_classes = [IsAuthenticated, IsOwner]
 
-

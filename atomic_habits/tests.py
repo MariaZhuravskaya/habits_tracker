@@ -12,7 +12,7 @@ class HabitsTestCase(APITestCase):
         """Подготовка данных перед каждым тестом"""
         self.client = APIClient()
         self.user = User.objects.create(email='adminka@gmail.com', password='1q2w3e4r')
-        self.client.force_authenticate(user=self.user)  # Аутентифицируем клиента с созданным пользователем
+        self.client.force_authenticate(user=self.user)
         self.user.save()
         self.habit = Habits.objects.create(
             place="бассейн",
@@ -114,6 +114,4 @@ class HabitsTestCase(APITestCase):
     def tearDown(self):
         User.objects.all().delete()
         Habits.objects.all().delete()
-
-
 
