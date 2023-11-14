@@ -1,0 +1,7 @@
+[run]
+source = .
+omit =
+    */venv/*
+    */migrations/*
+    manage.py
+    */settings.pyno
