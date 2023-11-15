@@ -35,7 +35,7 @@ psql -U postgres
 8. Cоздать базу данных 
 с помощью следующей команды:
 ```bash
-CREATE DATABASE atomic_habits;
+CREATE DATABASE atomic_habit;
 ```
 9. Выйти
 ```bash
