@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.contrib.auth.hashers import make_password
 from atomic_habits.models import Habits
 from users.models import User
 
@@ -9,6 +9,15 @@ class UserSerializers(serializers.ModelSerializer):
     Сериализатор для представления пользователя
     """
     habits = serializers.SerializerMethodField()
+
+    def validate_password(self, value: str) -> str:
+        """
+        Hash value passed by user.
+
+        :param value: password of a user
+        :return: a hashed version of the password
+        """
+        return make_password(value)
 
     def get_habits(self, obj_user):
         habits = Habits.objects.filter(user=obj_user)
@@ -20,4 +29,4 @@ class UserSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'city', 'habits']
+        fields = ['id', 'username', 'email', 'password', 'chat_id', 'city', 'habits']
