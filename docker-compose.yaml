@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+
+  redis:
+    # Брокер для Celery-задач
+    image: redis
+    ports:
+      - '6379:6379'
+
+  app:
+    # Берем Dockerfile из корня проекта
+    build: .
+    # Даёт возможность использовать команды терминала
+    tty: true
+    env_file:
+      - .env
+    # Запускаем тестовый сервер
+    command: >
+      bash -c "python manage.py makemigrations
+      && python manage.py migrate
+      && python manage.py collectstatic --noinput
+      && python manage.py runserver"
+    # Указываем куда будут помещены данные из корня проекта.
+    # Монтирует текущую директорию на контейнер, позволяя вносить изменения
+    # в код приложения без пересборки образа.
+    volumes:
+      - .:/app
+    # Открываем порт 8000 внутри и снаружи
+    ports:
+      - '8000:8000'
+    # Предотвращает запуск контейнера до тех пор, пока не будут запущены зависимые службыб
+    # с проверками работоспособности, чтобы предотвратить запуск контейнеров,
+    # пока их зависимости не будут фактически готовы
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    # Образ и версия базы, которую мы будем использовать
+    image: postgres:12.0-alpine
+    # Файл содержащий переменные для контейнера
+    env_file:
+      - .env
+    # Внешний том(volume) и место где он будет подключен внутри контейнера
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    environment:
+      # Учетные данные, которые можно будет переопределить
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: [ 'CMD-SHELL', 'pg_isready -d postgres -U postgres' ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  celery:
+    # Берем Dockerfile из корня проекта
+    build: .
+    # Даёт возможность использовать команды терминала
+    tty: true
+    # Запуск обработчика задач
+    command: celery -A config worker -l INFO
+    # Предотвращает запуск контейнера до тех пор, пока не будут запущены зависимые службы
+    depends_on:
+      - redis
+      - app
+      - db
+    # Контейнер перезапускается, если он завершает работу из-за ошибки,
+    # которая проявляется в виде ненулевого кода выхода.
+    restart: on-failure
+
+  celery_beat:
+    # Берем Dockerfile из корня проекта
+    build: .
+     # Даёт возможность использовать команды терминала
+    tty: true
+    command: celery -A config beat -l info -S django
+    # Предотвращает запуск контейнера до тех пор, пока не будут запущены зависимые службы
+    depends_on:
+      - redis
+      - app
+      - db
+    # Контейнер перезапускается, если он завершает работу из-за ошибки,
+    # которая проявляется в виде ненулевого кода выхода.
+    restart: on-failure
+
+
+volumes:
+  postgres_volume:
