@@ -36,7 +36,6 @@ services:
       db:
         condition: service_healthy
 
-
   db:
     # Образ и версия базы, которую мы будем использовать
     image: postgres:12.0-alpine
